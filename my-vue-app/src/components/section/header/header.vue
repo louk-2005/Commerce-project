@@ -22,9 +22,9 @@
                 <div class="right-box">
                     <div class="header-pages">
                         <a href="/">Home</a>
-                        <a href="">About us</a>
-                        <a href="">Products</a>
-                        <a href="">Contact us</a>
+                        <a href="/about">About us</a>
+                        <a href="/products">Products</a>
+                        <a href="/contact/us">Contact us</a>
                     </div>
                 </div>
 
@@ -63,8 +63,8 @@
     top: 0;
     right: 0;
     left: 0;
-    background-color: #2c3e50;
-    padding: 20px 0;
+    background-color: #1f2937;
+    padding: 30px 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     z-index: 100;
@@ -98,7 +98,7 @@
 }
 
 .right-box a:hover {
-    background-color: #34495e;
+    color: #fbbf24;
 }
 
 .left-box {
@@ -123,11 +123,11 @@
 
 #search-input:focus {
     width: 280px;
-    box-shadow: 0 0 5px #3498db;
+    box-shadow: 0 0 5px #fbbf24;
 }
 
 button[type="submit"] {
-    background-color: #3498db;
+    background-color: #fbbf24;
     border: none;
     color: white;
     padding: 0 15px;
@@ -145,7 +145,7 @@ button[type="submit"]:disabled {
 }
 
 button[type="submit"]:hover:not(:disabled) {
-    background-color: #2980b9;
+    background-color: #9f7406;
 }
 
 .search-icon {

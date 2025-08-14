@@ -11,6 +11,11 @@ router = DefaultRouter()
 
 router.register(r'contact', views.ContactViewSet, basename='contact')
 router.register(r'social/links', views.SocialLinkViewSet, basename='social')
+router.register(r'locations', views.LocationViewSet, basename='locations')
+router.register(r'communication/with/us', views.CommunicationWithUsViewSet, basename='communication-with-us')
+
+
+
 
 urlpatterns = [
     path('', include(router.urls)),

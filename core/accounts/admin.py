@@ -4,7 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 
 
 #your files
-from .models import User, ContactInfo, SocialLink
+from .models import User, ContactInfo, SocialLink, Location, CommunicationWithUs
 
 
 
@@ -35,3 +35,7 @@ admin.site.register(ContactInfo, ContactInfoAdmin)
 class SocialLinkAdmin(admin.ModelAdmin):
     list_display = ('name', 'url')
 admin.site.register(SocialLink, SocialLinkAdmin)
+
+admin.site.register(Location)
+
+admin.site.register(CommunicationWithUs)

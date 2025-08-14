@@ -5,13 +5,13 @@ import axios from "axios";
 const HomeImages = ref([]);
 const currentIndex = ref(0);
 const categories = ref([]);
+const products = ref([]);
 let timer = null;
 
 async function getHomeHeaderImage() {
     try {
         const response = await axios.get("http://127.0.0.1:8000/home/images");
         HomeImages.value = response.data;
-        console.log(HomeImages.value);
     } catch (error) {
         console.error("خطا در دریافت اطلاعات", error);
     }
@@ -21,7 +21,15 @@ async function getCategories() {
     try {
         const response = await axios.get("http://127.0.0.1:8000/products/categories/");
         categories.value = response.data;
-        console.log(categories.value);
+    } catch (error) {
+        console.error("خطا در دریافت اطلاعات", error);
+    }
+}
+
+async function getProducts() {
+    try {
+        const response = await axios.get("http://127.0.0.1:8000/products/products/");
+        products.value = response.data;
     } catch (error) {
         console.error("خطا در دریافت اطلاعات", error);
     }
@@ -65,6 +73,7 @@ onMounted(() => {
     getHomeHeaderImage();
     startTimer();
     getCategories();
+    getProducts();
 });
 
 onUnmounted(() => {
@@ -182,6 +191,37 @@ onUnmounted(() => {
             </div>
         </div>
     </div>
+    <div class="products">
+        <div class="products-box">
+            <div class="products-content">
+                <h5>PRODUCTS</h5>
+                <div class="home-product-list">
+                    <div
+                        class="home-product-item"
+                        v-for="product in products"
+                        :key="product.id"
+                    >
+                        <div class="product-image-wrapper">
+                            <img
+                                :src="product.image || '/default-product.jpg'"
+                                :alt="product.name"
+                                class="product-image"
+                            />
+                            <div class="product-overlay">
+                                <p>{{ product.description || 'No description available.' }}</p>
+                            </div>
+                        </div>
+                        <a
+                            href=""
+                            class="product-link">
+                            {{ product.name }}
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </template>
 
@@ -290,12 +330,12 @@ onUnmounted(() => {
 }
 
 .contact-us-btn {
-    background-color: #34495e;
+    background-color: #1f2937;
     color: white;
 }
 
 .contact-us-btn:hover {
-    background-color: #1c2833;
+    background-color: #10171b;
 }
 
 
@@ -382,7 +422,7 @@ onUnmounted(() => {
 }
 
 .about-us {
-    background-color: #2c3e50;
+    background-color: #1f2937;
 
 }
 
@@ -569,7 +609,7 @@ onUnmounted(() => {
 }
 
 .mission-statement {
-    background-color: #34495e; /* dark slate, distinct but not too harsh */
+    background-color: #1f2937; /* dark slate, distinct but not too harsh */
     padding: 40px 20px;
     text-align: center;
     color: #f9fafb; /* near white */
@@ -584,10 +624,133 @@ onUnmounted(() => {
 
 .mission-statement-content p {
     font-weight: 600;
-    font-size: clamp(1.3rem, 2vw, 1.8rem);
+    font-size: 1.4rem;
     line-height: 1.2;
     letter-spacing: 0.02em;
     margin: 0;
 }
+
+.products {
+    background-color: #f5f7fa; /* رنگ روشن و ملایم */
+    padding: 50px 0;
+}
+
+.products-box {
+
+    margin: 0 auto;
+    width: 70%;
+}
+
+.products-content h5 {
+    font-family: 'Vazir', sans-serif;
+    font-weight: 700;
+    font-size: 2.2rem;
+    margin-bottom: 40px;
+    color: #2c3e50;
+    text-align: center;
+}
+
+/* لیست محصولات بصورت grid دو ستونه */
+.home-product-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+/* هر آیتم محصول */
+.home-product-item {
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.home-product-item:hover {
+    transform: translateY(-8px);
+    background-color: #2c3e50;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+.home-product-item:hover .product-link {
+    color: #fff;
+}
+
+/* عکس محصول */
+.product-image-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 70%; /* حفظ نسبت 4:3 برای تصویر */
+    overflow: hidden;
+}
+
+.product-image {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.home-product-item:hover .product-image {
+    transform: scale(1.1);
+}
+
+/* لایه روی تصویر */
+.product-overlay {
+  position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(52, 73, 94, 0.85); /* رنگ تیره نیمه شفاف */
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+    text-align: center;
+    font-family: 'Vazir', sans-serif;
+    font-size: 1rem;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: all 0.4s ease;
+}
+
+.product-image-wrapper:hover .product-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* لینک نام محصول */
+.product-link {
+    display: block;
+    padding: 15px 10px;
+    font-family: 'Vazir', sans-serif;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1.2rem;
+    text-decoration: none;
+    text-align: center;
+    border-top: 1px solid #e1e4e8;
+    transition: color 0.3s ease;
+}
+
+.product-link:hover {
+    color: #3498db;
+}
+
+/* واکنش‌گرایی */
+@media (max-width: 768px) {
+    .home-category-list {
+        grid-template-columns: 1fr;
+    }
+
+    .products-box {
+        width: 95%;
+    }
+}
+
 
 </style>
