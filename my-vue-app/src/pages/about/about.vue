@@ -7,9 +7,7 @@
         <div class="about-box">
             <div class="about-content">
                 <div class="box">
-                    <div class="picture">
-                        <img src="../../assets/AboutAboutUs/zitto_customize-min-2.png" alt="">
-                    </div>
+
                     <div class="info">
                         <h5>
                             About us
@@ -32,13 +30,13 @@
                             clients by exporting different commodities to the countries of Asia and Europe such as
                         </p>
                     </div>
-
+                    <div class="picture">
+                        <img src="../../assets/AboutAboutUs/zitto_customize-min-2.png" alt="">
+                    </div>
                 </div>
 
                 <div class="box">
-                    <div class="picture">
-                        <img src="../../assets/AboutAboutUs/wall2-min-2.png" alt="">
-                    </div>
+
                     <div class="info">
                         <h5>
                             OUR MISSION
@@ -72,7 +70,9 @@
                             </li>
                         </ul>
                     </div>
-
+                    <div class="picture">
+                        <img src="../../assets/AboutAboutUs/wall2-min-2.png" alt="">
+                    </div>
                 </div>
 
 
@@ -192,6 +192,14 @@
         width: 100%;
         max-height: 350px;
     }
+    .about{
+        margin: 0;
+    }
+    .about-content{
+        padding-top: 0;
+    }
+
+;
 }
 
 

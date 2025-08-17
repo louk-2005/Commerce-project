@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # packages
     'rest_framework',
     "corsheaders",
+    "parler",
 
     # apps
     'accounts.apps.AccountsConfig',

@@ -1,43 +1,49 @@
 <script setup>
-import {ref, computed, onMounted} from 'vue'
-import {useRoute} from 'vue-router'
+import { ref, onMounted, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import axios from 'axios'
 
 const products = ref([])
 const route = useRoute()
 
-async function getProducts() {
+async function getProductsByCategory() {
     try {
-        const response = await axios.get("http://localhost:8000/products/products")
+        const categoryId = route.params.id
+        if (!categoryId) return
+        console.log("Category ID:", categoryId)
+        const response = await axios.get(`http://localhost:8000/products/categories/${categoryId}/get_products/`)
         products.value = response.data
+        console.log("Products:", products.value)
     } catch (error) {
         console.error("خطا در دریافت محصولات:", error)
     }
 }
 
-onMounted(() => {
-    getProducts()
-})
-
-function shortText(text, length) {
-    return text.length > length ? text.slice(0, length) + "..." : text
+const getImage = (path) => {
+  if (!path) return ''
+  return `http://localhost:8000${path}`
 }
 
-const filteredProducts = computed(() => {
-    const search = route.query.search?.toLowerCase() || ""
-    if (!search) return products.value
-    return products.value.filter(
-        p =>
-            p.name.toLowerCase().includes(search)
-    )
+onMounted(() => {
+    getProductsByCategory()
 })
+
+watch(
+  () => route.params.id,
+  () => {
+    getProductsByCategory()
+  }
+)
+
+const shortText = (text, length) => text.length > length ? text.slice(0, length) + "..." : text
 </script>
+
 
 <template>
     <div class="products">
         <div class="products-box">
             <div class="products-content">
-                <div class="product" v-for="product in filteredProducts" :key="product.id">
+                <div class="product" v-for="product in products" :key="product.id">
                     <div class="image-wrapper">
                         <img :src="product.image" alt="">
                         <div class="overlay">
@@ -270,5 +276,4 @@ const filteredProducts = computed(() => {
 
 }
 </style>
-
 

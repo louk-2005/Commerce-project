@@ -6,7 +6,6 @@ from django.core.validators import RegexValidator
 #app package
 from PIL import Image
 
-
 class User(AbstractUser):
     phone_regex = RegexValidator(
         regex=r'^\d{11}$',
@@ -90,13 +89,10 @@ class Location(models.Model):
             print(f"Error resizing image: {e}")
 
 class CommunicationWithUs(models.Model):
-    phone_regex = RegexValidator(
-        regex=r'^\d{11}$',
-        message="Phone number must be exactly 11 digits."
-    )
+
     full_name = models.CharField(max_length=50)
     email = models.EmailField()
-    phone = models.CharField(max_length=11, unique=True, validators=[phone_regex], blank=True, null=True)
+    phone = models.CharField(max_length=11, unique=True, blank=True, null=True)
     message = models.TextField(verbose_name="communicate with us", blank=True)
 
     def __str__(self):

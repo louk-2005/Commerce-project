@@ -1,10 +1,11 @@
 <script setup>
 import {ref, onMounted, onUnmounted} from "vue";
+import {useRouter} from "vue-router";
 import axios from "axios";
 
 const contacts = ref([]);
 
-
+const router = useRouter();
 async function getContacts() {
     try {
         const response = await axios.get("http://127.0.0.1:8000/accounts/contact/");
@@ -23,6 +24,10 @@ async function getSocialLink(id) {
     } catch (error) {
         console.error("خطا در دریافت اطلاعات", error);
     }
+}
+
+function goPage(path){
+    router.push(path);
 }
 
 
@@ -65,10 +70,10 @@ onMounted(async () => {
                     <div class="footer-quick-access">
                         <p>Quick Access</p>
                         <ul>
-                            <li>Home</li>
-                            <li>Products</li>
-                            <li>Contact Us</li>
-                            <li>About Us</li>
+                            <li @click="goPage('/')">Home</li>
+                            <li @click="goPage('/products')">Products</li>
+                            <li @click="goPage('/contact/us')">Contact Us</li>
+                            <li @click="goPage('/about')">About Us</li>
                         </ul>
                     </div>
 
@@ -234,7 +239,7 @@ onMounted(async () => {
     .footer-row {
         flex-direction: column;
         align-items: center;
-        text-align: center;
+        text-align: start;
         gap: 25px;
         border-bottom: none;
     }
@@ -258,7 +263,7 @@ onMounted(async () => {
 .social-link {
     width: 100%;
     margin-top: 30px;
-    text-align: center;
+    text-align: start;
     padding-top: 25px;
 }
 
@@ -272,7 +277,7 @@ onMounted(async () => {
 
 .social-links {
     display: flex;
-    justify-content: center;
+    justify-content: start;
     gap: 25px;
     flex-wrap: wrap;
 }

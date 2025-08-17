@@ -12,7 +12,6 @@ from .models import ContactInfo,SocialLink, Location,CommunicationWithUs
 from .serializers import ContactInfoSerializer,SocialLinkSerializer, LocationSerializer, CommunicationWithUsSerializer
 
 
-
 class ContactViewSet(viewsets.ModelViewSet):
     queryset = ContactInfo.objects.all()
     serializer_class = ContactInfoSerializer

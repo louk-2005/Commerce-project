@@ -95,4 +95,23 @@ onMounted(async () => {
 .location-info {
   height: 500px;
 }
+/* Responsive Map */
+@media (max-width: 1024px) {
+  .location-info {
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .location-info {
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .location-info {
+    height: 250px;
+  }
+}
+
 </style>

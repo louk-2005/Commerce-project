@@ -2,7 +2,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-
 #your files
 from .models import User, ContactInfo, SocialLink, Location, CommunicationWithUs
 
@@ -39,3 +38,8 @@ admin.site.register(SocialLink, SocialLinkAdmin)
 admin.site.register(Location)
 
 admin.site.register(CommunicationWithUs)
+
+
+
+
+

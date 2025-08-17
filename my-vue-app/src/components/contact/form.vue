@@ -166,6 +166,7 @@ const handleMessage = async () => {
     .row-inputs {
         flex-direction: column;
     }
+
 }
 </style>
 

@@ -1,11 +1,13 @@
 <script setup>
 import {ref, onMounted, onUnmounted} from "vue";
 import axios from "axios";
+import {useRouter} from "vue-router";
 
 const HomeImages = ref([]);
 const currentIndex = ref(0);
 const categories = ref([]);
 const products = ref([]);
+const router = useRouter();
 let timer = null;
 
 async function getHomeHeaderImage() {
@@ -69,6 +71,11 @@ function resetTimer() {
     startTimer();
 }
 
+function goPage(routeName, id) {
+    router.push({name: routeName, params: {id}});
+}
+
+
 onMounted(() => {
     getHomeHeaderImage();
     startTimer();
@@ -100,8 +107,8 @@ onUnmounted(() => {
             <div class="slider-info">
                 <p>Trading company</p>
                 <div class="slider-links">
-                    <a href="" class="products-btn">products</a>
-                    <a href="" class="contact-us-btn">contact us</a>
+                    <a href="/products" class="products-btn">products</a>
+                    <a href="/contact/us" class="contact-us-btn">contact us</a>
                 </div>
             </div>
 
@@ -158,8 +165,11 @@ onUnmounted(() => {
                     <div
                         class="home-category-item"
                         v-for="category in categories"
+                        @click="goPage('Category', category.id)"
                         :key="category.id"
                     >
+
+
                         <div class="category-image-wrapper">
                             <img
                                 :src="category.image || '/default-category.jpg'"
@@ -170,11 +180,12 @@ onUnmounted(() => {
                                 <p>{{ category.description || 'No description available.' }}</p>
                             </div>
                         </div>
-                        <a
-                            href=""
+                        <router-link
+                            :to="{ name: 'Category', params: { id: category.id } }"
                             class="category-link">
                             {{ category.name }}
-                        </a>
+                        </router-link>
+
 
                     </div>
                 </div>
@@ -662,7 +673,7 @@ onUnmounted(() => {
     background-color: #fff;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
@@ -672,8 +683,9 @@ onUnmounted(() => {
 .home-product-item:hover {
     transform: translateY(-8px);
     background-color: #2c3e50;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
+
 .home-product-item:hover .product-link {
     color: #fff;
 }
@@ -688,7 +700,10 @@ onUnmounted(() => {
 
 .product-image {
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
 }
@@ -699,7 +714,7 @@ onUnmounted(() => {
 
 /* لایه روی تصویر */
 .product-overlay {
-  position: absolute;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -741,14 +756,85 @@ onUnmounted(() => {
     color: #3498db;
 }
 
-/* واکنش‌گرایی */
-@media (max-width: 768px) {
-    .home-category-list {
-        grid-template-columns: 1fr;
-    }
 
-    .products-box {
-        width: 95%;
+/* Adjust slider height on smaller devices */
+@media (max-width: 1024px) {
+    .slider-container {
+        height: 70vh;
+    }
+}
+
+/* About Us adjustments */
+@media (max-width: 640px) {
+    .about-us-content{
+        flex-wrap: wrap;
+        justify-content: center;
+
+    }
+    .about-us-box {
+        margin: 0 auto;
+    }
+    .about-us-info{
+        width: 100%;
+    }
+    .about-us-info p {
+        font-size: 1rem;
+        line-height: 1.5;
+
+    }
+    .home-about-us-image img {
+        max-width: 100%;
+    }
+}
+
+/* Category Section for small screens */
+@media (max-width: 640px) {
+    .home-category-box {
+        width: 70%;
+    }
+    .home-category-list {
+        grid-template-columns: 1fr; /* single column */
+        gap: 15px;
+    }
+}
+
+/* Products Section for small screens */
+@media (max-width: 1024px) {
+    .home-product-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .home-product-list {
+        grid-template-columns: 1fr; /* single column for mobile */
+        gap: 15px;
+    }
+    .product-link {
+        font-size: 1rem;
+        padding: 10px 5px;
+    }
+}
+
+/* Slider info adjustments */
+@media (max-width: 480px) {
+    .slider-info p {
+        font-size: 1rem;
+    }
+    .slider-links a {
+        font-size: 0.9rem;
+        padding: 6px 10px;
+        width: 120px;
+    }
+}
+
+/* Mission Statement for mobile */
+@media (max-width: 640px) {
+    .mission-statement-box {
+        width: 90%;
+    }
+    .mission-statement-content p {
+        font-size: 1rem;
     }
 }
 
