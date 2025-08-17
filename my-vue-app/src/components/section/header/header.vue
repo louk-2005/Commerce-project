@@ -33,7 +33,7 @@ function changeLanguage(lang) {
     currentLang.value = lang
     localStorage.setItem('site_lang', lang)
     console.log(localStorage)
-
+    window.location.reload()
 }
 
 onMounted(() => {

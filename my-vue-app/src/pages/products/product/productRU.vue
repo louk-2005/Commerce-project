@@ -8,14 +8,12 @@ const product = ref(null);
 const productImages = ref([]);
 const route = useRoute();
 const selectedImage = ref();
-
 const props = defineProps({
     lang: {
         type: String,
         required: true
     }
 })
-
 async function getProduct() {
     try {
         const response = await axios.get(
@@ -24,7 +22,6 @@ async function getProduct() {
                 params: { 'lang': props.lang }
             }
         );
-
         product.value = response.data;
         console.log(product.value);
     } catch (error) {
@@ -35,9 +32,9 @@ async function getProduct() {
 async function getImages() {
     try {
         const response = await axios.get(
-    `http://localhost:8000/products/products/${route.params.id}/get_product_image`,
-    { params: { 'lang': props.lang } }
-);
+            `http://localhost:8000/products/products/${route.params.id}/get_product_image`,
+            {params: {'lang': props.lang}}
+        );
 
         productImages.value = response.data.map(img => ({
             ...img,
@@ -66,9 +63,9 @@ onMounted(() => {
     <!-- Breadcrumb -->
     <div class="breadcrumb-box">
         <nav class="breadcrumb">
-            <router-link to="/">Home</router-link>
+            <router-link to="/">Главная</router-link>
             /
-            <router-link to="/products">Products</router-link>
+            <router-link to="/products">Продукты</router-link>
             /
             <span v-if="product">{{ product.name }}</span>
         </nav>

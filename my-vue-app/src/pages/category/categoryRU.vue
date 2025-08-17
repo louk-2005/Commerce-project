@@ -1,43 +1,57 @@
 <script setup>
-import {ref, computed, onMounted} from 'vue'
-import {useRoute} from 'vue-router'
+import {ref, onMounted, watch, defineProps} from 'vue'
+import { useRoute } from 'vue-router'
 import axios from 'axios'
 
 const products = ref([])
 const route = useRoute()
-
-async function getProducts() {
+const props = defineProps({
+    lang: {
+        type: String,
+        required: true
+    }
+})
+async function getProductsByCategory() {
     try {
-        const response = await axios.get("http://localhost:8000/products/products")
+        const categoryId = route.params.id
+        if (!categoryId) return
+        console.log("Category ID:", categoryId)
+        const response = await axios.get(`http://localhost:8000/products/categories/${categoryId}/get_products/`,
+            {
+                params: { 'lang': props.lang }
+            })
         products.value = response.data
+        console.log("Products:", products.value)
     } catch (error) {
         console.error("خطا در دریافت محصولات:", error)
     }
 }
 
-onMounted(() => {
-    getProducts()
-})
-
-function shortText(text, length) {
-    return text.length > length ? text.slice(0, length) + "..." : text
+const getImage = (path) => {
+  if (!path) return ''
+  return `http://localhost:8000${path}`
 }
 
-const filteredProducts = computed(() => {
-    const search = route.query.search?.toLowerCase() || ""
-    if (!search) return products.value
-    return products.value.filter(
-        p =>
-            p.name.toLowerCase().includes(search)
-    )
+onMounted(() => {
+    getProductsByCategory()
 })
+
+watch(
+  () => route.params.id,
+  () => {
+    getProductsByCategory()
+  }
+)
+
+const shortText = (text, length) => text.length > length ? text.slice(0, length) + "..." : text
 </script>
+
 
 <template>
     <div class="products">
         <div class="products-box">
             <div class="products-content">
-                <div class="product" v-for="product in filteredProducts" :key="product.id">
+                <div class="product" v-for="product in products" :key="product.id">
                     <div class="image-wrapper">
                         <img :src="product.image" alt="">
                         <div class="overlay">
@@ -45,7 +59,7 @@ const filteredProducts = computed(() => {
                             <p class="full">
                                 {{ shortText(product.description, 300) }}
                                 <br>
-                                <a :href="`/product/${product.id}`">show more...</a>
+                                <a :href="`/product/${product.id}`">показать больше...</a>
                             </p>
                         </div>
                     </div>
@@ -53,9 +67,9 @@ const filteredProducts = computed(() => {
             </div>
 
             <div class="contact-us">
-                <p>Do you have any enquiry?</p>
-                <p>Do not hesitate to contact us or submit a business enquiry online.</p>
-                <a href="/contact/us">Contact Us</a>
+                <p>У вас есть какие-либо вопросы?</p>
+                <p>Не стесняйтесь обращаться к нам или отправить бизнес-запрос онлайн.</p>
+                <a href="/contact/us">связаться с нами</a>
             </div>
         </div>
     </div>
@@ -270,5 +284,4 @@ const filteredProducts = computed(() => {
 
 }
 </style>
-
 

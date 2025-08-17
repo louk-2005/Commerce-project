@@ -14,7 +14,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['name', 'description']
+    search_fields = ['name_en','name_ru','name_ar', 'description']
 
     def get_serializer_context(self):
         context = super().get_serializer_context()

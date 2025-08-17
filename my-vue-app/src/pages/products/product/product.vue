@@ -1,7 +1,7 @@
 <script setup>
 import ProductEN from "./productEN.vue";
 import ProductAR from "./productAR.vue";
-import ProductRU from "./productAR.vue";
+import ProductRU from "./productRU.vue";
 
 import {ref} from "vue";
 const currentLang = ref(localStorage.getItem('site_lang') || 'en')

@@ -3,9 +3,9 @@ import { createRouter, createWebHistory } from "vue-router"
 const Home = () => import("../pages/home/home.vue")
 const About = () => import("../pages/about/about.vue")
 const ContactUs = () => import("../pages/contactUs/contactUs.vue")
-const Products = () => import("../pages/products/products.vue")
+const Products = () => import("../pages/products/products/products.vue")
 const Category = () => import("../pages/category/category.vue")
-const Product = () => import("../pages/products/products/product.vue")
+const Product = () => import("../pages/products/product/product.vue")
 
 
 

@@ -1,18 +1,26 @@
 <script setup>
 import Header from "../../../components/product/header.vue"
 import axios from "axios";
-import {ref, onMounted} from "vue";
+import {ref, onMounted, defineProps} from "vue";
 import {useRoute} from "vue-router";
 
 const product = ref(null);
 const productImages = ref([]);
 const route = useRoute();
 const selectedImage = ref();
-
+const props = defineProps({
+    lang: {
+        type: String,
+        required: true
+    }
+})
 async function getProduct() {
     try {
         const response = await axios.get(
-            `http://localhost:8000/products/products/${route.params.id}/`
+            `http://localhost:8000/products/products/${route.params.id}/`,
+            {
+                params: { 'lang': props.lang }
+            }
         );
         product.value = response.data;
         console.log(product.value);
@@ -24,7 +32,8 @@ async function getProduct() {
 async function getImages() {
     try {
         const response = await axios.get(
-            `http://localhost:8000/products/products/${route.params.id}/get_product_image`
+            `http://localhost:8000/products/products/${route.params.id}/get_product_image`,
+            {params: {'lang': props.lang}}
         );
         productImages.value = response.data.map(img => ({
             ...img,

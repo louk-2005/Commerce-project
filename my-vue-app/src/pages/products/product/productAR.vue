@@ -1,7 +1,7 @@
 <script setup>
 import Header from "../../../components/product/header.vue"
 import axios from "axios";
-import {ref, onMounted} from "vue";
+import {ref, onMounted, defineProps} from "vue";
 import {useRoute} from "vue-router";
 
 const product = ref(null);
@@ -9,11 +9,22 @@ const productImages = ref([]);
 const route = useRoute();
 const selectedImage = ref();
 
+const props = defineProps({
+    lang: {
+        type: String,
+        required: true
+    }
+})
+
 async function getProduct() {
     try {
         const response = await axios.get(
-            `http://localhost:8000/products/products/${route.params.id}/`
+            `http://localhost:8000/products/products/${route.params.id}/`,
+            {
+                params: { 'lang': props.lang }
+            }
         );
+
         product.value = response.data;
         console.log(product.value);
     } catch (error) {
@@ -24,8 +35,10 @@ async function getProduct() {
 async function getImages() {
     try {
         const response = await axios.get(
-            `http://localhost:8000/products/products/${route.params.id}/get_product_image`
+            `http://localhost:8000/products/products/${route.params.id}/get_product_image`,
+            {params: {'lang': props.lang}}
         );
+
         productImages.value = response.data.map(img => ({
             ...img,
             image: img.image.startsWith("http") ? img.image : `http://localhost:8000${img.image}`,
@@ -53,9 +66,9 @@ onMounted(() => {
     <!-- Breadcrumb -->
     <div class="breadcrumb-box">
         <nav class="breadcrumb">
-            <router-link to="/">Home</router-link>
+            <router-link to="/">الرئيسية</router-link>
             /
-            <router-link to="/products">Products</router-link>
+            <router-link to="/products">المنتجات</router-link>
             /
             <span v-if="product">{{ product.name }}</span>
         </nav>
@@ -92,14 +105,18 @@ onMounted(() => {
 
 <style scoped>
 /* ---------------- Breadcrumb ---------------- */
-.breadcrumb {
+.breadcrumb-box {
     width: 70%;
     margin: 0 auto 30px;
     padding: 20px 0;
+    direction: rtl; /* اضافه شد */
+    text-align: right; /* اضافه شد */
+}
+
+.breadcrumb {
     font-size: 14px;
     color: #555;
 }
-
 
 .breadcrumb a {
     color: #007bff;
@@ -117,6 +134,7 @@ onMounted(() => {
     width: 70%;
     margin: 0 auto 40px;
     gap: 20px;
+    direction: rtl; /* اضافه شد */
 }
 
 /* Main image */
@@ -143,7 +161,7 @@ onMounted(() => {
     flex: 1 1 30%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    grid-auto-rows: 120px; /* ارتفاع مساوی با عرض برای مربع بودن */
+    grid-auto-rows: 120px;
     gap: 8px;
 }
 
@@ -176,6 +194,8 @@ onMounted(() => {
     padding: 20px;
     background: #f9f9f9;
     border-radius: 12px;
+    direction: rtl; /* اضافه شد */
+    text-align: right; /* اضافه شد */
 }
 
 .product-info h1 {
@@ -196,13 +216,13 @@ onMounted(() => {
         flex-direction: column;
     }
 
-    .gallery-main, .gallery-thumbnails {
+    .gallery-main,
+    .gallery-thumbnails {
         flex: 1 1 100%;
     }
 
     .gallery-thumbnails {
         max-height: 450px;
-
     }
 }
 
@@ -211,7 +231,6 @@ onMounted(() => {
         grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
         grid-auto-rows: 70px;
         max-height: 300px;
-
     }
 
     .product-info h1 {
@@ -234,5 +253,6 @@ onMounted(() => {
         font-size: 20px;
     }
 }
+
 
 </style>
