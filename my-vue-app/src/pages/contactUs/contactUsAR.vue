@@ -1,6 +1,6 @@
 <script setup>
 import Location from "../../components/Location/location.vue";
-import ContactForm from "../../components/contact/form.vue"
+import ContactForm from "../../components/contact/formAR.vue"
 import {ref, onMounted} from "vue";
 import axios from "axios";
 
@@ -27,7 +27,7 @@ onMounted(() => {
     <div class="communication-location">
         <div class="communication-location-box">
             <div class="communication-location-content">
-                <p> address in map</p>
+                <p>العنوان في الخريطة</p>
                 <Location/>
             </div>
         </div>
@@ -39,9 +39,9 @@ onMounted(() => {
             <div class="communication-info-content">
                     <div v-for="contact in contacts" :key="contact.id" class="contact-item">
                         <div class="product-message">
-                            <span v-if="contact.name === 'FACTORY'">factory</span>
-                            <span v-if="contact.name === 'CENTRAL_OFFICE'">Central office</span>
-                            <span v-if="contact.name === 'SHOW_ROOM'">Showroom</span>
+                            <span v-if="contact.name === 'FACTORY'">مصنع</span>
+                            <span v-if="contact.name === 'CENTRAL_OFFICE'">المكتب المركزي</span>
+                            <span v-if="contact.name === 'SHOW_ROOM'">صالة العرض</span>
                         </div>
 
                         <div class="icon-grid">
@@ -50,7 +50,7 @@ onMounted(() => {
                                 <div class="icon-text">
                                     <span v-if="contact.phone">{{ contact.phone }}</span>
                                     <span v-else>
-                                        Loading phone number...
+                                        جاري تحميل رقم الهاتف...
                                     </span>
                                 </div>
                             </div>
@@ -58,14 +58,14 @@ onMounted(() => {
                                 <font-awesome-icon class="icon" :icon="['fas', 'envelope']"/>
                                 <div class="icon-text">
                                     <span v-if="contact.email">{{ contact.email }}</span>
-                                    <span v-else>Loading phone email...</span>
+                                    <span v-else>جاري تحميل البريد الإلكتروني للهاتف...</span>
                                 </div>
                             </div>
                             <div class="icon-box">
                                 <font-awesome-icon class="icon" :icon="['fas', 'map-marker-alt']"/>
                                 <div class="icon-text">
                                     <span v-if="contact.address">{{ contact.address }}</span>
-                                    <span v-else>Loading phone address...</span>
+                                    <span v-else>جاري تحميل عنوان الهاتف...</span>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +79,7 @@ onMounted(() => {
     <div class="communication-form">
         <div class="communication-form-box">
             <div class="communication-form-content">
-                <p class="communication-form-header">Enter your message:</p>
+                <p class="communication-form-header">أدخل رسالتك:</p>
                 <ContactForm></ContactForm>
             </div>
         </div>
@@ -94,9 +94,10 @@ onMounted(() => {
     width: 80%;
     margin: 120px auto 30px;
     padding: 20px;
-    background: linear-gradient(135deg, #1f2937, #111827);
+    background: #1f2937;
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    direction: rtl;
 }
 
 /* ===== Map Section ===== */
@@ -125,6 +126,7 @@ onMounted(() => {
     width: 80%;
     margin: 0 auto;
     justify-content: space-between;
+    direction: rtl;
 }
 
 .contact-item {
@@ -135,6 +137,7 @@ onMounted(() => {
     max-width: 450px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
+    text-align: right;
 }
 
 .contact-item:hover {
@@ -154,9 +157,10 @@ onMounted(() => {
 /* ===== Icon Grid ===== */
 .icon-grid {
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-end;
     flex-wrap: wrap;
     gap: 20px;
+    direction: rtl;
 }
 
 .icon-box {
@@ -190,12 +194,13 @@ onMounted(() => {
 /* ===== Contact Form Section ===== */
 .communication-form-content {
     margin: 80px auto;
-    background-color: #111827;
+    background-color: #1f2937;
     padding: 35px 30px;
     border-radius: 14px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-    text-align: center;
+    text-align: right;
     width: 80%;
+    direction: rtl;
 }
 
 .communication-form-header {
@@ -203,8 +208,9 @@ onMounted(() => {
     font-weight: 700;
     margin-bottom: 25px;
     color: #fbbf24;
-    text-align: left;
+    text-align: right;
 }
+
 .contact-item {
     width: 100%;
     display: block; /* هر باکس در یک خط */
@@ -214,6 +220,7 @@ onMounted(() => {
     margin-bottom: 15px; /* فاصله بین باکس‌ها */
     background-color: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: right;
 }
 
 .icon-grid {
@@ -226,6 +233,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     gap: 10px;
+    justify-content: flex-end;
 }
 
 .icon {
@@ -235,6 +243,7 @@ onMounted(() => {
 
 .icon-text {
     font-size: 15px;
+    text-align: right;
 }
 
 /* ===== Responsive ===== */
@@ -257,9 +266,10 @@ onMounted(() => {
     .icon-grid {
         flex-direction: column;
         gap: 15px;
+        align-items: flex-end;
     }
 }
-
 </style>
+
 
 

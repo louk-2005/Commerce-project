@@ -1,6 +1,6 @@
 <script setup>
 import Location from "../../components/Location/location.vue";
-import ContactForm from "../../components/contact/form.vue"
+import ContactForm from "../../components/contact/formRU.vue"
 import {ref, onMounted} from "vue";
 import axios from "axios";
 
@@ -27,7 +27,7 @@ onMounted(() => {
     <div class="communication-location">
         <div class="communication-location-box">
             <div class="communication-location-content">
-                <p> address in map</p>
+                <p>адрес на карте</p>
                 <Location/>
             </div>
         </div>
@@ -39,9 +39,9 @@ onMounted(() => {
             <div class="communication-info-content">
                     <div v-for="contact in contacts" :key="contact.id" class="contact-item">
                         <div class="product-message">
-                            <span v-if="contact.name === 'FACTORY'">factory</span>
-                            <span v-if="contact.name === 'CENTRAL_OFFICE'">Central office</span>
-                            <span v-if="contact.name === 'SHOW_ROOM'">Showroom</span>
+                            <span v-if="contact.name === 'FACTORY'">фабрика</span>
+                            <span v-if="contact.name === 'CENTRAL_OFFICE'">Центральный офис</span>
+                            <span v-if="contact.name === 'SHOW_ROOM'">Выставочный зал</span>
                         </div>
 
                         <div class="icon-grid">
@@ -79,7 +79,7 @@ onMounted(() => {
     <div class="communication-form">
         <div class="communication-form-box">
             <div class="communication-form-content">
-                <p class="communication-form-header">Enter your message:</p>
+                <p class="communication-form-header">Введите ваше сообщение:</p>
                 <ContactForm></ContactForm>
             </div>
         </div>
@@ -94,7 +94,7 @@ onMounted(() => {
     width: 80%;
     margin: 120px auto 30px;
     padding: 20px;
-    background: linear-gradient(135deg, #1f2937, #111827);
+    background: #1f2937;
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
@@ -190,7 +190,7 @@ onMounted(() => {
 /* ===== Contact Form Section ===== */
 .communication-form-content {
     margin: 80px auto;
-    background-color: #111827;
+    background-color: #1f2937;
     padding: 35px 30px;
     border-radius: 14px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);

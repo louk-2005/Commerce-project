@@ -94,7 +94,7 @@ onMounted(() => {
     width: 80%;
     margin: 120px auto 30px;
     padding: 20px;
-    background: linear-gradient(135deg, #1f2937, #111827);
+    background: #1f2937;
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
@@ -190,7 +190,7 @@ onMounted(() => {
 /* ===== Contact Form Section ===== */
 .communication-form-content {
     margin: 80px auto;
-    background-color: #111827;
+    background-color: #1f2937;
     padding: 35px 30px;
     border-radius: 14px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
